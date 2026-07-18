@@ -167,8 +167,15 @@ audio {display:none!important;}
     margin:2em 0em;
 }
 
+.search {
+    display:flex;
+    align-items:stretch;
+    gap:0.5em;
+}
+
 .search .input {
-    width:calc(100% - 2em);
+    flex:1 1 auto;
+    width:auto;
     padding:0.5em 1em;
     font-size:1em;
     font-family:roboto mono, monospace;
@@ -178,7 +185,29 @@ audio {display:none!important;}
     background:#f5f5f5;
 }
 
+.search .go-btn {
+    flex:0 0 auto;
+    padding:0.5em 1em;
+    font-size:1em;
+    font-family:roboto mono, monospace;
+    border-radius:7px;
+    border:1px solid #dddddd;
+    background:#ffffff;
+    cursor:pointer;
+    outline:0;
+}
+
+.search .go-btn:hover {
+    background:#f0f0f0;
+}
+
 #tagbar .input {
+  font-size:0.85em;
+  background:#eff5ff;
+  border:1px solid #d5e0f2;
+}
+
+#tagbar .go-btn {
   font-size:0.85em;
   background:#eff5ff;
   border:1px solid #d5e0f2;
