@@ -506,15 +506,37 @@ $(document).ready(function() {
     $("#pause").hide();
     $("#buttons").fadeTo(600, 1);
 
-    $("#usernamebar").submit(function(event) {
-        let value = $(this).find("input:first").val();
+    function goToUsername(event) {
+        if (event) event.preventDefault();
+        let value = $("#usernamebar").find("input:first").val().trim();
+        if (value.length === 0) return;
         location.replace("?username=" + encodeURIComponent(value));
-    });
+    }
 
-    $("#tagbar").submit(function(event) {
-        let value = $(this).find("input:first").val();
+    function goToTag(event) {
+        if (event) event.preventDefault();
+        let value = $("#tagbar").find("input:first").val().trim();
+        if (value.length === 0) return;
         location.replace("?username=" + encodeURIComponent(boombox.getUsername()) + "&tag=" + encodeURIComponent(value));
+    }
+
+    // Real submit event (covers clicking the Go button and pressing Enter
+    // in browsers where implicit form submission fires reliably).
+    $("#usernamebar").on("submit", goToUsername);
+    $("#tagbar").on("submit", goToTag);
+
+    // Belt-and-suspenders: also listen directly for Enter on the inputs
+    // and for a click on the Go buttons, so this doesn't depend on the
+    // browser's native implicit-submit behavior at all.
+    $("#usernamebar input").on("keydown", function(event) {
+        if (event.key === "Enter" || event.keyCode === 13) goToUsername(event);
     });
+    $("#usernamebar .go-btn").on("click", goToUsername);
+
+    $("#tagbar input").on("keydown", function(event) {
+        if (event.key === "Enter" || event.keyCode === 13) goToTag(event);
+    });
+    $("#tagbar .go-btn").on("click", goToTag);
 
     $(".filtertype").click(function() {
         let hosts = boombox.getNumofHosts();
